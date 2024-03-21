@@ -1,0 +1,20 @@
+{
+    "name": "lysowc/gpt",
+    "description": "request gpt",
+    "type": "library",
+    "require": {
+        "php": ">=8.2",
+        "guzzlehttp/guzzle": ">=7.8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lysowc\\Gpt\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lysowc"
+        }
+    ]
+}
