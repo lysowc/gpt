@@ -31,18 +31,8 @@ $gpt = new AliGpt($apikey);
 //see https://help.aliyun.com/zh/dashscope/developer-reference/api-details
 try {
     $result = $gpt->send([
-        //'model' => 'qwen-max',// open if you want use other model, default qwen-turbo
+        'model' => 'qwen-max',// open if you want use other 
         'input' => [
-            'messages' => [
-                [
-                    "role" => "system",
-                    "content" => "You are a helpful assistant."
-                ],
-                [
-                    "role" => "user",
-                    "content" => "Who won the world series in 2020?"
-                ],
-            ],
             'prompt' => "your question",
         ],
     ]);
@@ -61,19 +51,9 @@ $headers = [
 //stream
 try {
     $result = $gpt->setHeaders($headers)->send([
-        //'model' => 'qwen-max',// open if you want use other model, default qwen-max
+        'model' => 'qwen-max',// open if you want use other model,
 
         'input' => [
-            'messages' => [
-                [
-                    "role" => "system",
-                    "content" => "You are a helpful assistant."
-                ],
-                [
-                    "role" => "user",
-                    "content" => "Who won the world series in 2020?"
-                ],
-            ],
             'prompt' => "your question",
             'parameters' => [
                 'incremental_output' => true,
