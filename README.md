@@ -19,140 +19,90 @@ require __DIR__ . '/vendor/autoload.php'; // remove this line if you use a PHP F
 
 //use aliyun gpt
 use Lysowc\Gpt\Repositories\AliGpt\RequestAliGpt;
-//use openai gpt
-use Lysowc\Gpt\Repositories\OpenAi\RequestOpenAiGpt;
-//use other gpt
-use Lysowc\Gpt\Repositories\OtherGpt\RequestOtherGpt;
 use GuzzleHttp\Exception\RequestException;
 
 $apikey = "YOUR_API_KEY";
-$gpt = new AliGpt($apikey);
+$gpt = new RequestAliGpt($apikey);
 //json response
 //see https://help.aliyun.com/zh/dashscope/developer-reference/api-details
-try {
-    $result = $gpt->send([
-        'model' => 'qwen-max',// open if you want use other 
-        'input' => [
-            'prompt' => "your question",
-        ],
-    ]);
-} catch (RequestException $e) {
-    $result = $e->getResponse()->getBody()->getContents();
-} catch (Exception $e) {
-    $result = $e->getMessage();
-}
-$result = json_encode($result,true);
-
-$headers = [
-    ////chose anyone
-    //'Accept' => 'text/event-stream',
-    //'X-DashScope-SSE' => 'enable',
+$params = [
+    'model' => 'qwen-turbo',
+    'input' => [
+        'prompt' => "your question",
+    ],
 ];
-//stream
 try {
-    $result = $gpt->setHeaders($headers)->send([
-        'model' => 'qwen-max',// open if you want use other model,
-
-        'input' => [
-            'prompt' => "your question",
-            'parameters' => [
-                'incremental_output' => true,
-            ]
-        ],
-    ]);
+    $result = $gpt->json($params)->send();
 } catch (RequestException $e) {
     $result = $e->getResponse()->getBody()->getContents();
 } catch (Exception $e) {
     $result = $e->getMessage();
 }
 $result = json_encode($result,true);
-
-
-
-
-
-$gpt = new OpenAiGpt($apikey);
-
-//json res
-//see https://platform.openai.com/docs/api-reference/chat/create
-try {
-    $result = $gpt->send([
-        //'model' => 'gpt-3.5-turbo',// open if you want use other model, default gpt-3.5-turbo
-        'messages' => [
-            [
-                "role" => "system",
-                "content" => "You are a helpful assistant."
-            ],
-            [
-                "role" => "user",
-                "content" => "Who won the world series in 2020?"
-            ],
-            [
-                "role" => "assistant",
-                "content" => "The Los Angeles Dodgers won the World Series in 2020."
-            ],
-            [
-                "role" => "user",
-                "content" => "Where was it played?"
-            ],
-        ],
-        'temperature' => 1.0,
-        'max_tokens' => 4000,
-        'frequency_penalty' => 0,
-        'presence_penalty' => 0,
-    ]);
-} catch (RequestException $e) {
-    $result = $e->getResponse()->getBody()->getContents();
-} catch (Exception $e) {
-    $result = $e->getMessage();
-}
-$result = json_encode($result,true);
-
-
-//stream res
-try {
-    $result = $gpt->send([
-        //'model' => 'gpt-3.5-turbo',// open if you want use other model, default gpt-3.5-turbo
-        'messages' => [
-            [
-                "role" => "system",
-                "content" => "You are a helpful assistant."
-            ],
-            [
-                "role" => "user",
-                "content" => "Who won the world series in 2020?"
-            ],
-            [
-                "role" => "assistant",
-                "content" => "The Los Angeles Dodgers won the World Series in 2020."
-            ],
-            [
-                "role" => "user",
-                "content" => "Where was it played?"
-            ],
-        ],
-        'temperature' => 1.0,
-        'max_tokens' => 4000,
-        'frequency_penalty' => 0,
-        'presence_penalty' => 0,
-        'stream' => true,
-    ]);
-} catch (RequestException $e) {
-    $result = $e->getResponse()->getBody()->getContents();
-} catch (Exception $e) {
-    $result = $e->getMessage();
-}
-$result = json_encode($result,true);
-
 var_dump($result);
+
 ```
+## different requests
+
+````php
+//json request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$gpt->json($params)->send();
+
+
+//form request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$gpt->form($params)->send();
+
+
+//query request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$gpt->query($params)->send();
+
+
+//body request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$gpt->body($params)->send();
+
+
+//multipart request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$result = $gpt->multipart($params)->send();
+
+
+//multipart request
+$gpt = new RequestAliGpt($apikey);
+$params = [];//your parameters
+$result = $gpt->json/form/query/body/multipart($params)->concurrency(10,5);
+//10  => Total concurrency
+//5   => The number of requests per request
+//$result = [
+//    'success' => [
+//        [
+//            index => index response
+//        ]
+//        ...
+//    ],
+//    'error' => [
+//        [
+//            index => error response
+//        ]
+//        ...
+//    ]
+//];
+````
 
 ## Base URL
 
 You can specify Origin URL with `setDomain()` method;
 
 ````php
-$gpt = new OpenAiGpt($apikey);
+$gpt = new RequestAliGpt($apikey);
 $gpt->setDomain('https://example.com');
 ````
 
@@ -161,14 +111,14 @@ $gpt->setDomain('https://example.com');
 You can specify Origin URL with `setUri()` method;
 
 ````php
-$gpt = new OpenAiGpt($apikey);
+$gpt = new RequestAliGpt($apikey);
 $gpt->setUri('/api/v1/chat/test');
 ````
 
 ## Set apikey
 
  ```php
-$gpt->setApiKey(["Connection"=>"keep-alive"]);
+$gpt->setApiKey("YOUR_API_KEY");
 ```
 
 ## Set header

@@ -80,6 +80,7 @@ class RequestGpt
 
     /**
      * concurrency requests
+     * 
      * @param int $requestCount
      * @param int $maxConcurrencyCount
      *
@@ -128,12 +129,10 @@ class RequestGpt
     /**
      * send request
      *
-     * @param array $params
-     *
      * @return string
      * @throws GuzzleException
      */
-    final protected function request(array $params): string
+    final protected function request(): string
     {
         $client = new Client([
             'base_uri' => $this->domain,

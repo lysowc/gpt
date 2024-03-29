@@ -81,13 +81,11 @@ class RequestOpenAiGpt extends RequestGpt
     /**
      * send request
      *
-     * @param array $params
-     *
      * @return string
      * @throws GuzzleException
      */
-    final public function send(array $params): string
+    final public function send(): string
     {
-        return $this->request($params);
+        return $this->request();
     }
 }
