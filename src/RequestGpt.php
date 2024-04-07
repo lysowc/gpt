@@ -218,7 +218,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setDomain(string $domain): RequestGpt
+    final public function setDomain(string $domain): self
     {
         $this->domain = $domain;
         return $this;
@@ -231,7 +231,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setUri(string $uri): RequestGpt
+    final public function setUri(string $uri): self
     {
         $this->uri = $uri;
         return $this;
@@ -244,7 +244,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setMethod(string $method): RequestGpt
+    final public function setMethod(string $method): self
     {
         $this->method = $method;
         return $this;
@@ -257,7 +257,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setModel(string $model): RequestGpt
+    final public function setModel(string $model): self
     {
         $this->model = $model;
         return $this;
@@ -270,7 +270,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setTimeOut(int $timeout): RequestGpt
+    final public function setTimeOut(int $timeout): self
     {
         $this->timeout = $timeout;
         return $this;
@@ -283,7 +283,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setApiKey(string $apiKey): RequestGpt
+    final public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
         return $this;
@@ -296,7 +296,7 @@ class RequestGpt
      *
      * @return $this
      */
-    final public function setHeaders(array $headers): RequestGpt
+    final public function setHeaders(array $headers): self
     {
         $this->headers = $headers;
         return $this;
@@ -309,7 +309,7 @@ class RequestGpt
      *
      * @return RequestGpt
      */
-    final public function setRedirect(bool $redirect): RequestGpt
+    final public function setRedirect(bool $redirect): self
     {
         $this->redirect = $redirect;
         return $this;
