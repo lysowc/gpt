@@ -1,5 +1,5 @@
 <?php
-namespace Lysowc\Gpt\Repositories\OpenAi;
+namespace Lysowc\Gpt\Repositories\OpenAiGpt;
 
 use RuntimeException;
 use Lysowc\Gpt\RequestGpt;
